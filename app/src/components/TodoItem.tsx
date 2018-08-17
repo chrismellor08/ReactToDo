@@ -15,6 +15,7 @@ interface TodoItemState {
 
 interface TodoItemProps extends WithStyles<typeof styles> {
   task: Task;
+  removeItem: (id: number) => void;
 }
 
 class TodoItem extends React.Component<TodoItemProps, TodoItemState> {
@@ -25,22 +26,28 @@ class TodoItem extends React.Component<TodoItemProps, TodoItemState> {
     };
   }
 
-  handleChange = () => {
+  handleClick = () => {
+    this.props.removeItem(this.props.task.id);
+  };
+
+  checkBoxHover = () => {
     this.setState({ checked: this.state.checked ? false : true });
   };
 
   render() {
     const { classes } = this.props;
     return (
-        <ListItem className={classes.listItem} button onClick={this.handleChange}>
-          <ListItemIcon>
-            <Checkbox
-              checked={this.state.checked}
-              value="checkedA"
-            />
-          </ListItemIcon>
-          <ListItemText primary={this.props.task.text} />
-        </ListItem>
+      <ListItem className={classes.listItem} button onClick={this.handleClick}>
+        <ListItemIcon>
+          <Checkbox
+            onMouseEnter={this.checkBoxHover}
+            onMouseLeave={this.checkBoxHover}
+            checked={this.state.checked}
+            title="Click to remove this task from your list"
+          />
+        </ListItemIcon>
+        <ListItemText primary={this.props.task.text} />
+      </ListItem>
     );
   }
 }

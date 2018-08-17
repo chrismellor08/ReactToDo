@@ -15,30 +15,43 @@ import {
 } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 
-interface LocationsListState {
+interface TodoListState {
   modalHidden: boolean;
   newTaskText: string;
+  tasks: Task[];
 }
 
-interface LocationsListProps extends WithStyles<typeof styles> {
+interface TodoListProps extends WithStyles<typeof styles> {
   tasks: Task[];
   addTask: (task: Task) => void;
+  removeTask: (tasks: Task[]) => void;
 }
 
-class LocationsList extends React.Component<
-  LocationsListProps,
-  LocationsListState
-> {
-  constructor(props: LocationsListProps) {
+class TodoList extends React.Component<TodoListProps, TodoListState> {
+  static getDerivedStateFromProps(
+    nextProps: TodoListProps,
+    prevState: TodoListState
+  ) {
+    if (prevState.tasks !== nextProps.tasks) {
+      return { tasks: nextProps.tasks };
+    } else {
+      return null;
+    }
+  }
+  constructor(props: TodoListProps) {
     super(props);
     this.state = {
       modalHidden: true,
-      newTaskText: ""
+      newTaskText: "",
+      tasks: this.props.tasks
     };
   }
 
   hideModal = () => {
-    this.setState({ modalHidden: this.state.modalHidden ? false : true, newTaskText: "" });
+    this.setState({
+      modalHidden: this.state.modalHidden ? false : true,
+      newTaskText: ""
+    });
   };
 
   setText = (text: any) => {
@@ -46,20 +59,28 @@ class LocationsList extends React.Component<
   };
 
   addNewItem = () => {
-    this.props.addTask({done: false, text: this.state.newTaskText});
-    this.setState({modalHidden: this.state.modalHidden ? false : true})
-  }
+    this.props.addTask({
+      id: this.props.tasks.length,
+      done: false,
+      text: this.state.newTaskText
+    });
+    this.setState({ modalHidden: this.state.modalHidden ? false : true });
+  };
+
+  removeItem = (id: number) => {
+    this.props.removeTask(this.state.tasks.filter(t => t.id !== id));
+  };
 
   render() {
-    const { tasks } = this.props;
+    const { tasks } = this.state;
     return (
       <List component="nav">
         {tasks.map(t => (
-          <TodoItem task={t} />
+          <TodoItem removeItem={this.removeItem} task={t} />
         ))}
         <ListItem button onClick={this.hideModal}>
           <ListItemIcon>
-            <Add style={{ color: "green" }} />
+            <Add style={{ color: "green", paddingLeft: 12 }} />
           </ListItemIcon>
           <ListItemText primary={"Add a new item"} />
         </ListItem>
@@ -102,4 +123,4 @@ class LocationsList extends React.Component<
 
 const styles = (theme: any) => createStyles({});
 
-export default withStyles(styles)(LocationsList);
+export default withStyles(styles)(TodoList);

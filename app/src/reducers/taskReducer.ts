@@ -11,7 +11,9 @@ export default function tasksReducer(
     case actionTypeKeys.LOAD_TASKS_SUCCESS:
       return [...action.tasks];
     case actionTypeKeys.ADD_TASK_SUCCESS:
-    return [, ...state,Object.assign({}, action.task)]
+    return [ ...state,Object.assign({}, action.task)];
+    case actionTypeKeys.REMOVE_TASK_SUCCESS:
+    return [...action.tasks]
     default:
       return state;
   }

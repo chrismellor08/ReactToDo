@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import { StoreState } from "../store/storeState";
 import { AnyAction } from "redux";
-import { loadTasks, addTask } from "../actions/taskActions";
+import { loadTasks, addTask, removeTask } from "../actions/taskActions";
 import { Task } from "../types/Task";
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 import createStyles from "@material-ui/core/styles/createStyles";
@@ -17,6 +17,7 @@ interface ListContainerState {
 interface ListContainerDispatchProps {
   getTasks: () => void;
   addTask: (task: Task) => void;
+  removeTask: (tasks: Task[]) => void;
 }
 
 interface ListContainerDataProps {
@@ -57,7 +58,7 @@ class ListContainer extends React.Component<
     return (
       <div
         style={{
-          marginTop: 200,
+          marginTop: 50,
           marginLeft: 300,
           marginRight: 300
         }}
@@ -70,6 +71,7 @@ class ListContainer extends React.Component<
             <TodoList
               addTask={this.props.addTask}
               tasks={this.state.thingsToDo}
+              removeTask={this.props.removeTask}
             />
           </CardContent>
         </Card>
@@ -93,6 +95,9 @@ const mapDispatchToProps = (
     },
     addTask: (task: Task) => {
       dispatch(addTask(task));
+    },
+    removeTask: (tasks: Task[]) => {
+      dispatch(removeTask(tasks));
     }
   };
 };

@@ -1,6 +1,5 @@
 export const thingsToDo = [
-    { done: false, text: "review Chris' code" },
-    { done: false, text: "take a deep breath" },
-    { done: false, text: "make the best decision of your life" },
-    { done: false, text: "Send Chris a very hefty offer letter" }
+    { id: 1, done: false, text: "Review Chris' code" },
+    { id: 2, done: false, text: "Make the best decision of your life" },
+    { id: 3, done: false, text: "Send Chris a very hefty offer letter" }
   ];
