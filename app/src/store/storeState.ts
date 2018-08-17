@@ -1,5 +1,5 @@
-import {Task} from "../types/Task"
+import { Task } from "../types/Task";
 
 export interface StoreState {
-tasks: Task[]
+  tasks: Task[];
 }

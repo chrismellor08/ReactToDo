@@ -1,6 +1,4 @@
 import * as React from "react";
-import createStyles from "@material-ui/core/styles/createStyles";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { Task } from "../types/Task";
 import TodoItem from "./TodoItem";
 import {
@@ -21,7 +19,7 @@ interface TodoListState {
   tasks: Task[];
 }
 
-interface TodoListProps extends WithStyles<typeof styles> {
+interface TodoListProps {
   tasks: Task[];
   addTask: (task: Task) => void;
   removeTask: (tasks: Task[]) => void;
@@ -49,7 +47,7 @@ class TodoList extends React.Component<TodoListProps, TodoListState> {
 
   hideModal = () => {
     this.setState({
-      modalHidden: this.state.modalHidden ? false : true,
+      modalHidden: !this.state.modalHidden,
       newTaskText: ""
     });
   };
@@ -64,7 +62,7 @@ class TodoList extends React.Component<TodoListProps, TodoListState> {
       done: false,
       text: this.state.newTaskText
     });
-    this.setState({ modalHidden: this.state.modalHidden ? false : true });
+    this.setState({ modalHidden: !this.state.modalHidden });
   };
 
   removeItem = (id: number) => {
@@ -84,6 +82,7 @@ class TodoList extends React.Component<TodoListProps, TodoListState> {
           </ListItemIcon>
           <ListItemText primary={"Add a new item"} />
         </ListItem>
+        {/* this dialog should probably be broken out into it's own component */}
         <Dialog open={!this.state.modalHidden}>
           <div
             style={{
@@ -121,6 +120,4 @@ class TodoList extends React.Component<TodoListProps, TodoListState> {
   }
 }
 
-const styles = (theme: any) => createStyles({});
-
-export default withStyles(styles)(TodoList);
+export default TodoList;

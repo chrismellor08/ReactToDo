@@ -7,8 +7,6 @@ import { StoreState } from "../store/storeState";
 import { AnyAction } from "redux";
 import { loadTasks, addTask, removeTask } from "../actions/taskActions";
 import { Task } from "../types/Task";
-import { WithStyles, withStyles } from "@material-ui/core/styles";
-import createStyles from "@material-ui/core/styles/createStyles";
 
 interface ListContainerState {
   thingsToDo: Task[];
@@ -25,8 +23,7 @@ interface ListContainerDataProps {
 }
 
 interface ListContainerProps
-  extends WithStyles<typeof styles>,
-    ListContainerDispatchProps,
+  extends ListContainerDispatchProps,
     ListContainerDataProps {}
 
 class ListContainer extends React.Component<
@@ -101,9 +98,8 @@ const mapDispatchToProps = (
     }
   };
 };
-const styles = (theme: any) => createStyles({});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(ListContainer));
+)(ListContainer);
