@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import { StoreState } from "../store/storeState";
 import { AnyAction } from "redux";
-import { loadTasks } from "../actions/taskActions";
+import { loadTasks, addTask } from "../actions/taskActions";
 import { Task } from "../types/Task";
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 import createStyles from "@material-ui/core/styles/createStyles";
@@ -16,6 +16,7 @@ interface ListContainerState {
 
 interface ListContainerDispatchProps {
   getTasks: () => void;
+  addTask: (task: Task) => void;
 }
 
 interface ListContainerDataProps {
@@ -50,7 +51,7 @@ class ListContainer extends React.Component<
 
   componentDidMount() {
     this.props.getTasks();
-  };
+  }
 
   render() {
     return (
@@ -61,12 +62,15 @@ class ListContainer extends React.Component<
           marginRight: 300
         }}
       >
-        <Card style={{ height: 400 }}>
+        <Card>
           <CardContent>
             <Typography variant="headline" component="h2">
               Things I need to do
             </Typography>
-            <TodoList tasks={this.state.thingsToDo} />
+            <TodoList
+              addTask={this.props.addTask}
+              tasks={this.state.thingsToDo}
+            />
           </CardContent>
         </Card>
       </div>
@@ -84,8 +88,11 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<StoreState, void, AnyAction>
 ): ListContainerDispatchProps => {
   return {
-    getTasks: async () => {
-      await dispatch(loadTasks());
+    getTasks: () => {
+      dispatch(loadTasks());
+    },
+    addTask: (task: Task) => {
+      dispatch(addTask(task));
     }
   };
 };

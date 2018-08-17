@@ -22,6 +22,7 @@ interface LocationsListState {
 
 interface LocationsListProps extends WithStyles<typeof styles> {
   tasks: Task[];
+  addTask: (task: Task) => void;
 }
 
 class LocationsList extends React.Component<
@@ -45,7 +46,7 @@ class LocationsList extends React.Component<
   };
 
   addNewItem = () => {
-    alert(this.state.newTaskText);
+    this.props.addTask({done: false, text: this.state.newTaskText});
     this.setState({modalHidden: this.state.modalHidden ? false : true})
   }
 
@@ -102,37 +103,3 @@ class LocationsList extends React.Component<
 const styles = (theme: any) => createStyles({});
 
 export default withStyles(styles)(LocationsList);
-
-// import * as React from "react";
-// import createStyles from "@material-ui/core/styles/createStyles";
-// import { withStyles, WithStyles } from "@material-ui/core/styles";
-// import {Task} from "../Types/Task";
-// import TodoItem from "./TodoItem";
-
-// interface TodoListProps extends WithStyles<typeof styles> {
-//     tasks: Task[];
-// }
-
-// class TodoList extends React.Component<
-//   TodoListProps
-// > {
-
-//   render() {
-//     // const { classes } = this.props;
-//     return (
-//     <List component="nav">
-//     <h1>dfuh</h1>
-//        {this.props.tasks.map(l => {
-//            <TodoItem task={l}/>
-//        })}
-//       </List>
-//     );
-//   }
-// }
-
-// const styles = (theme: any) =>
-//   createStyles({
-
-//   });
-
-// export default withStyles(styles)(TodoList);

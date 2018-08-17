@@ -10,6 +10,8 @@ export default function tasksReducer(
   switch (action.type) {
     case actionTypeKeys.LOAD_TASKS_SUCCESS:
       return [...action.tasks];
+    case actionTypeKeys.ADD_TASK_SUCCESS:
+    return [, ...state,Object.assign({}, action.task)]
     default:
       return state;
   }
