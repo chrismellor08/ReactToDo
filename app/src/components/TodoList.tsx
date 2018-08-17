@@ -58,7 +58,7 @@ class TodoList extends React.Component<TodoListProps, TodoListState> {
 
   addNewItem = () => {
     this.props.addTask({
-      id: this.props.tasks.length,
+      id: this.props.tasks.length + 1,
       done: false,
       text: this.state.newTaskText
     });
@@ -74,7 +74,7 @@ class TodoList extends React.Component<TodoListProps, TodoListState> {
     return (
       <List component="nav">
         {tasks.map(t => (
-          <TodoItem removeItem={this.removeItem} task={t} />
+          <TodoItem key={t.text} removeItem={this.removeItem} task={t} />
         ))}
         <ListItem button onClick={this.hideModal}>
           <ListItemIcon>
