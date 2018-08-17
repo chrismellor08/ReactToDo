@@ -37,12 +37,13 @@ class TodoItem extends React.Component<TodoItemProps, TodoItemState> {
   render() {
     const { classes } = this.props;
     return (
-      <ListItem className={classes.listItem} button onClick={this.handleClick}>
+      <ListItem className={classes.listItem} button>
         <ListItemIcon>
           <Checkbox
             onMouseEnter={this.checkBoxHover}
             onMouseLeave={this.checkBoxHover}
             checked={this.state.checked}
+            onClick={this.handleClick}
             title="Click to remove this task from your list"
           />
         </ListItemIcon>
